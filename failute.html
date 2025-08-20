@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-bs-theme="auto">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Falha no Cadastro</title>
+
+  <!-- Bootstrap CSS via CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      text-align: center;
+
+      /* Gradiente animado */
+      background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+    }
+
+    @keyframes gradientBG {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .container-failure {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      width: 90%;
+      max-width: 400px;
+      background-color: rgba(255, 172, 172, 0.85);
+      border-radius: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: 1s ease;
+    }
+
+    .container-failure:hover {
+      transform: scale(1.05);
+      transition: 1s ease;
+    }
+
+    .container-failure img {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 1rem;
+    }
+
+    .container-failure h1 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: #b71c1c;
+    }
+
+    .container-failure p {
+      margin-bottom: 1.5rem;
+      color: #7f0000;
+    }
+
+    .container-failure a.btn {
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container-failure">
+    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828665.png" alt="Erro">
+    <h1>Falha no Cadastro!</h1>
+    <p>Ocorreu um erro ao tentar realizar seu cadastro. Tente novamente mais tarde.</p>
+    <a href="/" class="btn btn-danger btn-lg">Voltar</a>
+  </div>
+
+  <!-- Bootstrap JS via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
