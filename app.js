@@ -19,7 +19,7 @@ mailchimp.setConfig({
 
 
 app.get('/', (req, res) => {
-res.sendFile(__dirname + './signup.html')
+res.sendFile(__dirname + '/signup.html')
 })
 
 app.post('/', (req,res) =>{
