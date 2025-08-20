@@ -4,10 +4,11 @@ const mailchimp = require('@mailchimp/mailchimp_marketing');
 const path = require('path');
 
 const app = express();
-const port = process.env.PORT || 3000; // Vercel fornece a porta
+const port = process.env.PORT || 3000;
 
-app.use(bodyParser.urlencoded({ extended: true }));
+// Servir arquivos estáticos
 app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Mailchimp config direto no código
 mailchimp.setConfig({
@@ -17,10 +18,12 @@ mailchimp.setConfig({
 
 const LIST_ID = 'f556647c67';
 
+// Rota principal
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'signup.html'));
 });
 
+// Receber formulário
 app.post('/', async (req, res) => {
   const { name, lastName, email } = req.body;
 
@@ -30,7 +33,6 @@ app.post('/', async (req, res) => {
       status: 'subscribed',
       merge_fields: { FNAME: name, LNAME: lastName },
     });
-
     res.sendFile(path.join(__dirname, 'success.html'));
   } catch (error) {
     console.error(error);
@@ -38,6 +40,7 @@ app.post('/', async (req, res) => {
   }
 });
 
+// Rodar servidor
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
 });
