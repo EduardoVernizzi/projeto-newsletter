@@ -1,69 +1,43 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const app = express()
-const port = 3000
-
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(express.static('public'))
-
-//API KEY Mailchimp: e5fdb6761433b94fec90f03a46c4c2cd-us9
-//Audience List ID: f556647c67
-
-
+const express = require('express');
+const bodyParser = require('body-parser');
 const mailchimp = require('@mailchimp/mailchimp_marketing');
+const path = require('path');
 
+const app = express();
+const port = process.env.PORT || 3000; // Vercel fornece a porta
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('public'));
+
+// Mailchimp config direto no código
 mailchimp.setConfig({
   apiKey: 'e5fdb6761433b94fec90f03a46c4c2cd-us9',
-  server: 'us9',
+  server: 'us9'
 });
 
+const LIST_ID = 'f556647c67';
 
 app.get('/', (req, res) => {
-res.sendFile(__dirname + '/signup.html')
-})
+  res.sendFile(path.join(__dirname, 'signup.html'));
+});
 
-app.post('/', (req,res) =>{
-
-const name = req.body.name;
-const lastName = req.body.lastName;
-const email = req.body.email;
-
-//API MailChimp - Add member 
-
-const addMember = async () => {
+app.post('/', async (req, res) => {
+  const { name, lastName, email } = req.body;
 
   try {
+    await mailchimp.lists.addListMember(LIST_ID, {
+      email_address: email,
+      status: 'subscribed',
+      merge_fields: { FNAME: name, LNAME: lastName },
+    });
 
-      const data = await mailchimp.lists.addListMember("f556647c67", {
-
-
-    email_address: email,
-    status: 'subscribed',
-    merge_fields: {
-    FNAME: name,
-    LNAME: lastName,
-
-    }
-
-  });
-  res.sendFile(__dirname + '/sucess.html')
-    
+    res.sendFile(path.join(__dirname, 'success.html'));
   } catch (error) {
-
-  res.sendFile(__dirname + '/failute.html')
-    
+    console.error(error);
+    res.sendFile(path.join(__dirname, 'failure.html'));
   }
-
-};
-
-addMember();
-
-
-})
-
+});
 
 app.listen(port, () => {
-
-  console.log(`Servidor está rodando na porta ${port}`)
-})
-
+  console.log(`Servidor rodando na porta ${port}`);
+});
